@@ -1,10 +1,12 @@
 import { Outlet } from 'react-router';
 import Header from '../../sections/Header';
+import Sidebar from '~/sections/Sidebar';
 
 export default function Layout() {
   return (
-    <div className="flex items-stretch justify-stretch">
-      <aside className="w-[260px]">Sidebar</aside>
+    <div className="flex min-h-screen items-stretch justify-stretch">
+      <Sidebar />
+
       <div className="basis-full">
         <Header />
         <main>
