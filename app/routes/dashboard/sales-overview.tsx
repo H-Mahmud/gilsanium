@@ -1,3 +1,5 @@
+import AnalyticsFilter from '~/sections/AnalyticsFilter';
+
 export function meta() {
   return [
     { title: 'Gilsanium | Sales Overview' },
@@ -6,5 +8,9 @@ export function meta() {
 }
 
 export default function SalesOverview() {
-  return <div>SalesOverview</div>;
+  return (
+    <div>
+      <AnalyticsFilter />
+    </div>
+  );
 }
