@@ -9,7 +9,7 @@ export default function Layout() {
 
       <div className="basis-full">
         <Header />
-        <main className="px-10">
+        <main className="mx-auto max-w-[1100px] px-10">
           <Outlet />
         </main>
       </div>
