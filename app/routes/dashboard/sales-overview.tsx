@@ -2,6 +2,7 @@ import AnalyticsCard from '~/components/AnalyticsCard';
 import AnalyticsChart from '~/components/AnalyticsChart';
 import ProductMonitor from '~/components/ProductMonitor';
 import AnalyticsFilter from '~/sections/AnalyticsFilter';
+import Shop from '~/sections/Shop';
 
 export function meta() {
   return [
@@ -24,6 +25,9 @@ export default function SalesOverview() {
       <div className="mt-6 flex gap-3">
         <AnalyticsChart />
         <ProductMonitor />
+      </div>
+      <div>
+        <Shop />
       </div>
     </div>
   );
