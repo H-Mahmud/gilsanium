@@ -1,4 +1,5 @@
 import AnalyticsCard from '~/components/AnalyticsCard';
+import AnalyticsChart from '~/components/AnalyticsChart';
 import AnalyticsFilter from '~/sections/AnalyticsFilter';
 
 export function meta() {
@@ -18,6 +19,9 @@ export default function SalesOverview() {
         <AnalyticsCard />
         <AnalyticsCard />
         <AnalyticsCard />
+      </div>
+      <div>
+        <AnalyticsChart />
       </div>
     </div>
   );
