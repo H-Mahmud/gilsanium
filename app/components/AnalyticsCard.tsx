@@ -20,7 +20,7 @@ export default function AnalyticsCard() {
       <div>
         <span className="text-[24px] font-medium">$1,000</span>
         <span className="inline-block h-fit bg-red-100 p-1 text-red-700">
-          <SVGIcon className="size-3 bg-red-700" src="/assets/icons/analytics/graph-down.svg" />
+          <SVGIcon className="size-3 bg-red-700" src="/assets/icons/analytics/ic-graph-down.svg" />
           5.2%
         </span>
       </div>
