@@ -58,7 +58,7 @@ const data = [
 
 export default function AnalyticsChart() {
   return (
-    <div>
+    <div className="w-7/12">
       <div className="flex items-center justify-between">
         <div>
           <SVGIcon src="/assets/icons/analytics/ic-signal.svg" />
