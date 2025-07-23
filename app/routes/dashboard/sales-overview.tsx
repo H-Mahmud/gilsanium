@@ -1,3 +1,4 @@
+import AnalyticsCard from '~/components/AnalyticsCard';
 import AnalyticsFilter from '~/sections/AnalyticsFilter';
 
 export function meta() {
@@ -11,6 +12,13 @@ export default function SalesOverview() {
   return (
     <div>
       <AnalyticsFilter />
+
+      <div className="flex gap-3">
+        <AnalyticsCard />
+        <AnalyticsCard />
+        <AnalyticsCard />
+        <AnalyticsCard />
+      </div>
     </div>
   );
 }
