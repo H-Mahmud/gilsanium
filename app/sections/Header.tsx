@@ -1,3 +1,6 @@
+import IconButton from '~/components/ui/IconButton';
+import SVGIcon from '~/components/ui/SVGIcon';
+
 export default function Header() {
   return (
     <header className="flex h-20 items-center justify-between border-b border-card-border px-10 py-5">
@@ -7,9 +10,15 @@ export default function Header() {
       </div>
 
       <div className="flex items-center gap-1.5">
-        <span>Search</span>
-        <span>Notification</span>
-        <span>Filter</span>
+        <IconButton className="size-8" variant="outline">
+          <SVGIcon className="size-4 bg-primary" src="/assets/icons/general/ic-search.svg" />
+        </IconButton>
+        <IconButton className="size-8" variant="outline">
+          <SVGIcon className="size-4 bg-primary" src="/assets/icons/general/ic-bell-active.svg" />
+        </IconButton>
+        <IconButton className="size-8" variant="outline">
+          <SVGIcon className="size-4 bg-primary" src="/assets/icons/general/ic-filter.svg" />
+        </IconButton>
 
         <hr className="mx-5 w-4 rotate-90 border-icon-border" />
 
@@ -24,11 +33,16 @@ export default function Header() {
             />
             <span className="absolute right-0 bottom-0 inline-block size-2.5 rounded-full bg-[#339C50] outline-2 outline-white"></span>
           </div>
-          <div className="min-w-40 basis-full">
+          <div className="basis-full">
             <h6 className="text-base font-medium text-primary">Amiril Mu`</h6>
             <span className="text-xs text-primary">amirilmu@mail.com</span>
           </div>
-          <span>Arrow Down</span>
+          <IconButton className="size-4" variant="ghost">
+            <SVGIcon
+              className="size-2.5 bg-primary"
+              src="/assets/icons/general/ic-arrow-down.svg"
+            />
+          </IconButton>
         </div>
       </div>
     </header>
