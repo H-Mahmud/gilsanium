@@ -15,6 +15,8 @@
 body {
   @apply text-primary;
 }
+
+/** Menu Tree Styles **/
 .submenu-item {
   position: relative;
 }
@@ -41,4 +43,30 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+}
+
+/** Sidebar scrollbar styles **/
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var('--color-primary');
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background-color: var('--color-primary');
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 transparent;
 }
