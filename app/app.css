@@ -10,6 +10,9 @@
   --color-card-border: #efefef;
   --color-icon-border: #dfdfdf;
 }
+body {
+  @apply text-primary;
+}
 .submenu-item {
   position: relative;
 }

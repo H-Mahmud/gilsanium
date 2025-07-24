@@ -1,45 +1,97 @@
 import SVGIcon from './ui/SVGIcon';
 import { Button } from './ui/Button';
+import Card from './ui/Card';
+import { cn } from '~/utils';
+
+type ProductMonitoringItem = {
+  id: number;
+  name: string;
+  orderCount: number;
+  image: string;
+};
+const productData: ProductMonitoringItem[] = [
+  {
+    id: 1,
+    name: 'Smartwatch',
+    orderCount: 1500,
+    image: '/assets/images/products/01-thumbnail.png',
+  },
+  {
+    id: 2,
+    name: 'Speaker',
+    orderCount: 900,
+    image: '/assets/images/products/01-thumbnail.png',
+  },
+  {
+    id: 3,
+    name: 'Drone',
+    orderCount: 900,
+    image: '/assets/images/products/03-thumbnail.png',
+  },
+  {
+    id: 3,
+    name: 'Headphone',
+    orderCount: 10,
+    image: '/assets/images/products/04-thumbnail.png',
+  },
+];
 
 export default function ProductMonitor() {
   return (
-    <div className="w-5/12">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3>
-            <SVGIcon src="/assets/icons/analytics/ic-start-up.svg" /> Product Monitor
-          </h3>
-          <span>Popular Product</span>
+    <Card className="w-5/12">
+      <div className="mb-4 flex items-center justify-between">
+        <div className="space-y-0.5 text-primary/80">
+          <h4 className="flex items-center gap-x-1.5">
+            <SVGIcon className="size-4 bg-primary/80" src="/assets/icons/analytics/ic-signal.svg" />
+            Sale Analytics
+          </h4>
+          <p className="text-xs text-primary/50">Popular Product</p>
         </div>
-        <Button
-          rightIcon={<SVGIcon src="/assets/icons/general/ic-arrow-down.svg" />}
-          variant="outline"
-        >
+
+        <Button className="ml-8 h-8" variant="outline">
           Order
+          <SVGIcon className="size-2 bg-primary" src="/assets/icons/general/ic-arrow-down.svg" />
         </Button>
       </div>
 
       <div>
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
+        {productData.map((item) => (
+          <ProductMonitoringItem {...item} active={item.id === 1} />
+        ))}
+        <p className="block cursor-pointer pt-5 text-center text-xs text-primary/50 underline">
+          View all Details
+        </p>
       </div>
-    </div>
+    </Card>
   );
 }
 
-const ProductItem = () => {
+const ProductMonitoringItem = ({
+  id,
+  image,
+  name,
+  orderCount,
+  active,
+}: ProductMonitoringItem & { active?: boolean }) => {
   return (
-    <div className="flex items-center justify-between border-b p-4">
+    <div
+      className={cn(
+        'py-2.h-5 flex items-center justify-between border-b border-icon-border py-4 pr-4 duration-200 ease-in-out',
+        active && 'rounded-lg border-transparent bg-primary-contrast/5',
+      )}
+    >
       <div className="flex items-center gap-3">
-        <span className="text-sm text-gray-500">1</span>
-        <img alt="Product" className="h-12 w-12 rounded" src="/assets/images/product1.jpg" />
-        <h4 className="text-lg font-semibold">Product Name</h4>
-      </div>
+        <span
+          className={cn('h-7 w-1 rounded-tr-sm rounded-br-sm', active && 'bg-primary-contrast')}
+        />
+        <span className="inline-flex size-9 items-center justify-center text-sm font-medium">
+          {id}
+        </span>
+        <img alt="Product" className="size-10 rounded-md" src={image} />
 
-      <span className="text-lg font-bold">$99.99</span>
+        <h4 className="text-sm font-medium">{name}</h4>
+      </div>
+      <span className="text-xs font-semibold text-primary-contrast">{orderCount} Orders</span>
     </div>
   );
 };
