@@ -1,3 +1,4 @@
+import ProductCard from '~/components/ProductCard';
 import { Button } from '~/components/ui/Button';
 import Card from '~/components/ui/Card';
 import IconButton from '~/components/ui/IconButton';
@@ -36,20 +37,35 @@ export default function Shop() {
 
       <div className="mt-6 flex items-stretch justify-between gap-4">
         <div className="h-[786px] w-5/12 bg-amber-100">Map</div>
-        <div>
-          <div>
-            <img src="/assets/images/products/laptop.png" />
-            <div>
-              <span>Featured</span>
-              <IconButton>
-                <SVGIcon src="/assets/icons/general/ic-location.svg" />
-              </IconButton>
-            </div>
-            <div>
-              <span>Laptop</span>
-              <h4>$1,240</h4>
-            </div>
-          </div>
+        <div className="grid grid-cols-2 gap-4">
+          <ProductCard
+            image="/assets/images/products/laptop.png"
+            isFeatured={true}
+            location="bc"
+            price={10555}
+            title="Laptop"
+          />
+          <ProductCard
+            image="/assets/images/products/laptop.png"
+            isFeatured={true}
+            location="bc"
+            price={10555}
+            title="Laptop"
+          />
+          <ProductCard
+            image="/assets/images/products/laptop.png"
+            isFeatured={true}
+            location="bc"
+            price={10555}
+            title="Laptop"
+          />
+          <ProductCard
+            image="/assets/images/products/laptop.png"
+            isFeatured={true}
+            location="bc"
+            price={10555}
+            title="Laptop"
+          />
         </div>
       </div>
     </Card>
