@@ -1,11 +1,11 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
+import { icon, Marker as LMarker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
-const DefaultIcon = L.icon({ iconUrl, shadowUrl });
-L.Marker.prototype.options.icon = DefaultIcon;
+const DefaultIcon = icon({ iconUrl, shadowUrl });
+LMarker.prototype.options.icon = DefaultIcon;
 
 export default function StoreMap() {
   return (
