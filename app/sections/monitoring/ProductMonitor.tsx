@@ -43,7 +43,7 @@ export default function ProductMonitor() {
         <div className="space-y-0.5 text-primary/80">
           <h4 className="flex items-center gap-x-1.5">
             <SVGIcon className="size-4 bg-primary/80" src="/assets/icons/analytics/ic-signal.svg" />
-            Sale Analytics
+            Product Monitoring
           </h4>
           <p className="text-xs text-primary/50">Popular Product</p>
         </div>
