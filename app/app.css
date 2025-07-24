@@ -9,6 +9,8 @@
   --color-sidebar-bg: #f9f9f9;
   --color-card-border: #efefef;
   --color-icon-border: #dfdfdf;
+
+  --inset-shadow-btn: inset 0px -2px 8px #00000026, inset 0px 4px 4px #ffffff1a;
 }
 body {
   @apply text-primary;
