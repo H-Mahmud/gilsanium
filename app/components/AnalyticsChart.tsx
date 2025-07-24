@@ -3,6 +3,7 @@ import SVGIcon from './ui/SVGIcon';
 import {
   BarChart,
   Bar,
+  Rectangle,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -58,49 +59,53 @@ const data = [
 
 export default function AnalyticsChart() {
   return (
-    <div className="w-7/12">
-      <div className="flex items-center justify-between">
-        <div>
-          <SVGIcon src="/assets/icons/analytics/ic-signal.svg" />
+    <div className="w-7/12 rounded-[10px] border border-card-border p-4">
+      <div className="mb-4 flex items-center justify-between">
+        <span className="inline-flex items-center gap-x-1.5 text-primary/80">
+          <SVGIcon className="size-4 bg-primary/80" src="/assets/icons/analytics/ic-signal.svg" />
           Sale Analytics
-        </div>
-        <div>
+        </span>
+        <div className="inline-flex items-center gap-x-4 text-sm text-primary/80">
           <span>
-            <span className="size-2 bg-[#B9CFF9]"></span>
+            <span className="mr-1 inline-block size-3 bg-[#B9CFF9]" />
             Refound
           </span>
 
           <span>
-            <span className="size-2 bg-primary"></span>
+            <span className="mr-1 inline-block size-3 bg-primary-contrast" />
             Checkout
           </span>
-          <Button
-            rightIcon={<SVGIcon src="/assets/icons/general/ic-arrow-down.svg" />}
-            variant="outline"
-          >
+          <Button className="ml-8 h-8" variant="outline">
             This Month
+            <SVGIcon className="size-2 bg-primary" src="/assets/icons/general/ic-arrow-down.svg" />
           </Button>
         </div>
       </div>
 
-      <div style={{ height: 300 }}>
+      <div className="aspect-585/268 w-full">
         <ResponsiveContainer height="100%" width="100%">
           <BarChart
             data={data}
+            height={300}
             margin={{
-              top: 20,
+              top: 5,
               right: 30,
               left: 20,
               bottom: 5,
             }}
+            width={500}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis tick={{ fontSize: 12 }} />
+            <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="pv" fill="#8884d8" stackId="a" />
-            <Bar dataKey="uv" fill="#82ca9d" stackId="a" />
+            <Bar activeBar={<Rectangle fill="pink" stroke="blue" />} dataKey="pv" fill="#8884d8" />
+            <Bar
+              activeBar={<Rectangle fill="gold" stroke="purple" />}
+              dataKey="uv"
+              fill="#82ca9d"
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>
