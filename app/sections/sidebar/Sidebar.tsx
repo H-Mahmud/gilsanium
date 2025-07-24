@@ -7,7 +7,7 @@ import ActiveSuperCard from '~/components/ActiveSuperCard';
 
 export default function Sidebar() {
   return (
-    <aside className="scrollbar-thin sticky top-0 flex h-screen w-[260px] shrink-0 flex-col justify-between overflow-y-scroll scroll-smooth bg-sidebar-bg outline outline-card-border">
+    <aside className="scrollbar-hide sticky top-0 flex h-screen w-[260px] shrink-0 flex-col justify-between overflow-y-scroll scroll-smooth bg-sidebar-bg outline outline-card-border">
       <div className="flex h-20 shrink-0 items-center justify-between px-6">
         <Logo />
         <IconButton className="size-7" variant="outline">

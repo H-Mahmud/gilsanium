@@ -45,28 +45,12 @@ body {
   background-position: center;
 }
 
-/** Sidebar scrollbar styles **/
-.scrollbar-thin::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/** Scrollbar styles **/
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: var('--color-primary');
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-.scrollbar-thin:hover::-webkit-scrollbar-thumb {
-  background-color: var('--color-primary');
-}
-
-.scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: #94a3b8 transparent;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
