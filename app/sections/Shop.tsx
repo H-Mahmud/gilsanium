@@ -3,8 +3,17 @@ import { Button } from '~/components/ui/Button';
 import Card from '~/components/ui/Card';
 import IconButton from '~/components/ui/IconButton';
 import SVGIcon from '~/components/ui/SVGIcon';
+import StoreMap from './shop/StoreMap.client';
+import { useState } from 'react';
 
 export default function Shop() {
+  const [isClient, setIsClient] = useState(false);
+  useState(() => {
+    if (typeof window !== 'undefined') {
+      setIsClient(true);
+    }
+  }, []);
+
   return (
     <Card>
       <div className="flex items-center justify-between gap-2">
@@ -36,7 +45,7 @@ export default function Shop() {
       </div>
 
       <div className="mt-6 flex items-stretch justify-between gap-4">
-        <div className="h-[786px] w-5/12 bg-amber-100">Map</div>
+        <div className="h-[786px] w-5/12 bg-amber-100">{isClient && <StoreMap />}</div>
         <div className="grid grid-cols-2 gap-4">
           <ProductCard
             image="/assets/images/products/laptop.png"
