@@ -3,7 +3,7 @@ import SVGIcon from '~/components/ui/SVGIcon';
 
 export default function Header() {
   return (
-    <header className="flex h-20 items-center justify-between border-b border-card-border px-10 py-5">
+    <header className="sticky top-0 z-10 flex h-20 items-center justify-between border-b border-card-border bg-white px-10 py-5">
       <div>
         <h1 className="text-xl font-medium text-primary">Sales Overview</h1>
         <p className="text-xs text-primary">Monitor all your content activity</p>
