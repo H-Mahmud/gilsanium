@@ -5,7 +5,7 @@
     'Inter Tight', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
   --color-primary: oklch(0.3596 0.1066 272.38); /* #2b3674; */
-  --color-primary-2: #414ff4;
+  --color-primary-contrast: #414ff4;
   --color-sidebar-bg: #f9f9f9;
   --color-card-border: #efefef;
   --color-icon-border: #dfdfdf;
