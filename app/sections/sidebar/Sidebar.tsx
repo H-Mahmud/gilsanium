@@ -1,6 +1,8 @@
 import IconButton from '~/components/ui/IconButton';
 import Logo from './Logo';
 import SVGIcon from '~/components/ui/SVGIcon';
+import SidebarMenus from './SidebarMenus';
+import { navData } from '~/config-dashboard-menu';
 
 export default function Sidebar() {
   return (
@@ -11,6 +13,7 @@ export default function Sidebar() {
           <SVGIcon className="size-4" src="/assets/icons/general/ic-sun.svg" />
         </IconButton>
       </div>
+      <SidebarMenus navData={navData} />
     </aside>
   );
 }
