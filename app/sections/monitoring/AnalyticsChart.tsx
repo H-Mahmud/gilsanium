@@ -1,5 +1,3 @@
-import { Button } from './ui/Button';
-import SVGIcon from './ui/SVGIcon';
 import {
   BarChart,
   Bar,
@@ -11,6 +9,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { Button } from '~/components/ui/Button';
+import SVGIcon from '~/components/ui/SVGIcon';
 
 const data = [
   {

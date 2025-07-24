@@ -1,6 +1,5 @@
-import AnalyticsChart from '~/components/AnalyticsChart';
-import ProductMonitor from '~/components/ProductMonitor';
 import { AnalyticalSummary } from '~/sections/analytical-summary';
+import AnalyticalMonitoring from '~/sections/monitoring/AnalyticalMonitoring';
 import Shop from '~/sections/Shop';
 
 export function meta() {
@@ -14,10 +13,7 @@ export default function SalesOverview() {
   return (
     <div>
       <AnalyticalSummary />
-      <div className="mt-6 flex gap-3">
-        <AnalyticsChart />
-        <ProductMonitor />
-      </div>
+      <AnalyticalMonitoring />
       <div>
         <Shop />
       </div>
