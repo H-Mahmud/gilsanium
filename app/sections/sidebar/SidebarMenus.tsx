@@ -30,7 +30,7 @@ function MenuItem({ icon, title, active, badge }: NavItem & { active?: boolean }
 
 function SubMenuItem({ title, path }: { title: string; path: string }) {
   return (
-    <li className="pl-4">
+    <li className="submenu-item pl-4">
       <NavLink
         className={({ isActive }) =>
           cn('text-sm font-light text-primary/40', isActive && 'text-primary/60')
@@ -56,7 +56,7 @@ export default function SidebarMenus({ navData }: { navData: NavData[] }) {
                 <div key={item.title}>
                   <MenuItem {...item} active={pathname === item.path} />
 
-                  <ul className="mx-4 border-l border-primary/40">
+                  <ul className="submenu mx-4">
                     {item.children.map(({ title, path }) => (
                       <SubMenuItem key={title} path={path} title={title} />
                     ))}
