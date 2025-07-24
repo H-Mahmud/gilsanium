@@ -46,7 +46,7 @@ function SubMenuItem({ title, path }: { title: string; path: string }) {
 export default function SidebarMenus({ navData }: { navData: NavData[] }) {
   const { pathname } = useLocation();
   return (
-    <div className="px-6">
+    <div className="basis-full px-6">
       {navData.map((group) => (
         <div className="pb-6" key={group.subheader}>
           <GroupLabel>{group.subheader}</GroupLabel>

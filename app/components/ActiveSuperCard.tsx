@@ -3,7 +3,7 @@ import { Button } from './ui/Button';
 
 export default function ActiveSuperCard() {
   return (
-    <Card className="mx-6 my-10 gap-3 space-y-3 bg-white p-3">
+    <Card className="mx-6 my-10 shrink-0 gap-3 space-y-3 bg-white p-3">
       <div className="flex items-center justify-between gap-1.5">
         <img
           alt="Super Badge"
