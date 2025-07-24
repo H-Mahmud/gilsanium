@@ -1,4 +1,4 @@
-import AnalyticsFilter from '../AnalyticsFilter';
+import AnalyticsFilter from './AnalyticsFilter';
 import AnalyticsCard from '~/sections/analytical-summary/AnalyticsCard';
 
 export default function AnalyticalSummary() {
