@@ -59,7 +59,7 @@ const data = [
 
 export default function AnalyticsChart() {
   return (
-    <div className="w-7/12 rounded-[10px] border border-card-border p-4">
+    <div className="flex w-7/12 flex-col justify-between rounded-[10px] border border-card-border p-4">
       <div className="mb-4 flex items-center justify-between">
         <span className="inline-flex items-center gap-x-1.5 text-primary/80">
           <SVGIcon className="size-4 bg-primary/80" src="/assets/icons/analytics/ic-signal.svg" />
