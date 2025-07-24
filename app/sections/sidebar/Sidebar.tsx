@@ -3,7 +3,7 @@ import Logo from './Logo';
 import SVGIcon from '~/components/ui/SVGIcon';
 import SidebarMenus from './SidebarMenus';
 import { navData } from '~/config-dashboard-menu';
-import ActiveSuperCard from '~/components/ActiveSuperCard';
+import ActiveSuperCard from '~/sections/sidebar/ActiveSuperCard';
 
 export default function Sidebar() {
   return (
