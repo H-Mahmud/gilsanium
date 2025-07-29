@@ -1,6 +1,13 @@
+import { useLoaderData } from 'react-router';
+import db from '~/db';
+import { productsTable } from '~/db/schema';
 import { AnalyticalSummary } from '~/sections/analytical-summary';
 import AnalyticalMonitoring from '~/sections/monitoring/AnalyticalMonitoring';
 import Shop from '~/sections/Shop';
+
+export async function loader() {
+  return db.select().from(productsTable).limit(4);
+}
 
 export function meta() {
   return [
@@ -10,12 +17,13 @@ export function meta() {
 }
 
 export default function SalesOverview() {
+  const products = useLoaderData<typeof loader>();
   return (
     <div>
       <AnalyticalSummary />
       <AnalyticalMonitoring />
       <div>
-        <Shop />
+        <Shop products={products} />
       </div>
     </div>
   );

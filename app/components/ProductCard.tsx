@@ -5,7 +5,7 @@ import SVGIcon from './ui/SVGIcon';
 type ProductCardProps = {
   image: string;
   title: string;
-  price: number;
+  price: string;
   isFeatured?: boolean;
   location?: string;
   className?: string;
@@ -35,7 +35,9 @@ export default function ProductCard({
       </div>
       <div className="absolute bottom-0 flex w-full flex-col gap-1 bg-primary/70 px-4 py-5">
         <h3 className="text-base font-medium text-white">{title}</h3>
-        <span className="text-2xl font-semibold text-white">{formatCurrency(price, 0)}</span>
+        <span className="text-2xl font-semibold text-white">
+          {formatCurrency(parseFloat(price), 0)}
+        </span>
       </div>
     </div>
   );

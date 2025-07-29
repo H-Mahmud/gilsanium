@@ -3,13 +3,14 @@ import { Button } from '~/components/ui/Button';
 import Card from '~/components/ui/Card';
 import IconButton from '~/components/ui/IconButton';
 import SVGIcon from '~/components/ui/SVGIcon';
-import StoreMap from './shop/StoreMap.client';
-import { useState } from 'react';
 import ShopFilterModal from './shop/ShopFilterModal';
+import type { productsTable } from '~/db/schema';
+import { useEffect, useState } from 'react';
+import StoreMap from './shop/StoreMap.client';
 
-export default function Shop() {
+export default function Shop({ products }: { products: (typeof productsTable.$inferSelect)[] }) {
   const [isClient, setIsClient] = useState(false);
-  useState(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsClient(true);
     }
@@ -46,34 +47,9 @@ export default function Shop() {
       <div className="mt-6 flex items-stretch justify-between gap-4">
         <div className="h-[786px] w-5/12 bg-amber-100">{isClient && <StoreMap />}</div>
         <div className="grid grid-cols-2 gap-4">
-          <ProductCard
-            image="/assets/images/products/laptop.png"
-            isFeatured={true}
-            location="bc"
-            price={10555}
-            title="Laptop"
-          />
-          <ProductCard
-            image="/assets/images/products/laptop.png"
-            isFeatured={true}
-            location="bc"
-            price={10555}
-            title="Laptop"
-          />
-          <ProductCard
-            image="/assets/images/products/laptop.png"
-            isFeatured={true}
-            location="bc"
-            price={10555}
-            title="Laptop"
-          />
-          <ProductCard
-            image="/assets/images/products/laptop.png"
-            isFeatured={true}
-            location="bc"
-            price={10555}
-            title="Laptop"
-          />
+          {products.map((item) => (
+            <ProductCard image={item.image} key={item.id} price={item.price} title={item.name} />
+          ))}
         </div>
       </div>
     </Card>
