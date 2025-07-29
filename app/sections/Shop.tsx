@@ -5,6 +5,7 @@ import IconButton from '~/components/ui/IconButton';
 import SVGIcon from '~/components/ui/SVGIcon';
 import StoreMap from './shop/StoreMap.client';
 import { useState } from 'react';
+import ShopFilterModal from './shop/ShopFilterModal';
 
 export default function Shop() {
   const [isClient, setIsClient] = useState(false);
@@ -16,7 +17,7 @@ export default function Shop() {
 
   return (
     <Card>
-      <div className="flex items-center justify-between gap-2">
+      <div className="relative flex items-center justify-between gap-2">
         <Button className="shrink-0" variant="outline">
           For Sale
           <SVGIcon className="ml-7 size-4" src="/assets/icons/general/ic-open.svg" />
@@ -31,9 +32,7 @@ export default function Shop() {
             <SVGIcon className="size-7 bg-primary" src="/assets/icons/general/ic-search.svg" />
           </IconButton>
         </div>
-        <IconButton className="size-12 shrink-0" variant="solid">
-          <SVGIcon className="size-7 bg-white" src="/assets/icons/general/ic-filter.svg" />
-        </IconButton>
+        <ShopFilterModal />
       </div>
 
       <div className="mt-3 flex items-center justify-between">
