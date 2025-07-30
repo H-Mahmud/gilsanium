@@ -1,66 +1,100 @@
 import db from '.';
 import { productsTable } from './schema';
 
-async function seedProducts() {
-  const productsData: (typeof productsTable.$inferInsert)[] = [
-    {
-      name: 'Dell XPS 13 Laptop',
-      image:
-        'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80',
-      price: '999.99',
-      featured: true,
-    },
-    {
-      name: 'Canon EOS R6 Camera',
-      image:
-        'https://images.unsplash.com/photo-1588392382834-a891154bca4d?auto=format&fit=crop&w=800&q=80',
-      price: '1899.99',
-      featured: true,
-    },
-    {
-      name: 'iPhone 14 Pro',
-      image:
-        'https://images.unsplash.com/photo-1661961112955-4985b65cba06?auto=format&fit=crop&w=800&q=80',
-      price: '1099.0',
-      featured: false,
-    },
-    {
-      name: 'Samsung Galaxy S23',
-      image:
-        'https://images.unsplash.com/photo-1677094307377-279b1091e84f?auto=format&fit=crop&w=800&q=80',
-      price: '849.99',
-      featured: false,
-    },
-    {
-      name: 'Sony WH-1000XM5 Headphones',
-      image:
-        'https://images.unsplash.com/photo-1585386959984-a4155224c450?auto=format&fit=crop&w=800&q=80',
-      price: '399.99',
-      featured: true,
-    },
-    {
-      name: 'Apple MacBook Air M2',
-      image:
-        'https://images.unsplash.com/photo-1585241936934-8d50b30c80e5?auto=format&fit=crop&w=800&q=80',
-      price: '1249.0',
-      featured: false,
-    },
-    {
-      name: 'GoPro HERO11',
-      image:
-        'https://images.unsplash.com/photo-1613909207039-ec9a90c35ee3?auto=format&fit=crop&w=800&q=80',
-      price: '499.99',
-      featured: false,
-    },
-    {
-      name: 'Microsoft Surface Laptop 5',
-      image:
-        'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80',
-      price: '1299.99',
-      featured: true,
-    },
-  ];
+const images: string[] = [
+  '/assets/images/products/bag.png',
+  '/assets/images/products/desktop.png',
+  '/assets/images/products/laptop.png',
+  '/assets/images/products/mobile.png',
+  '/assets/images/products/1.jpg',
+  '/assets/images/products/2.jpg',
+  '/assets/images/products/3.jpg',
+  '/assets/images/products/4.jpg',
+  '/assets/images/products/5.jpg',
+  '/assets/images/products/6.jpg',
+  '/assets/images/products/7.jpg',
+  '/assets/images/products/8.jpg',
+  '/assets/images/products/9.jpg',
+  '/assets/images/products/10.jpg',
+];
 
+const names: string[] = [
+  'Mobile',
+  'Laptop',
+  'Bag',
+  'Shoes',
+  'T-shirt',
+  'Watch',
+  'Chair',
+  'Table',
+  'Pen',
+  'Notebook',
+  'Fan',
+  'Mouse',
+  'Keyboard',
+  'Bottle',
+  'Cap',
+  'Gloves',
+  'Socks',
+  'Dress',
+  'Wallet',
+  'Brush',
+  'Belt',
+  'Jeans',
+  'Lamp',
+  'Hat',
+  'Scarf',
+  'Phone',
+  'Tablet',
+  'Clock',
+  'Mug',
+  'Glass',
+  'Charger',
+  'Cable',
+  'Speaker',
+  'Headset',
+  'Pillow',
+  'Blanket',
+  'Toothbrush',
+  'Mirror',
+  'Comb',
+  'Ring',
+  'Earrings',
+  'Necklace',
+  'Shampoo',
+  'Soap',
+  'Cream',
+  'Towel',
+  'Boots',
+  'Jacket',
+  'Skirt',
+];
+
+const productsData: (typeof productsTable.$inferInsert)[] = Array.from({ length: 50 }, () => {
+  const name = names[Math.floor(Math.random() * names.length)];
+  const price = (Math.random() * 1000 + 10).toFixed(2); // as string
+  const sale = Math.random() < 0.5;
+  const salePrice = sale ? (parseFloat(price) * (Math.random() * 0.5 + 0.5)).toFixed(2) : null;
+
+  const createdAt = new Date(
+    Date.now() - Math.floor(Math.random() * 2 * 365 * 24 * 60 * 60 * 1000),
+  );
+
+  const product: typeof productsTable.$inferInsert = {
+    name,
+    price,
+    featured: Math.random() < 0.5,
+    image: images[Math.floor(Math.random() * images.length)],
+    createdAt,
+    sale,
+    salePrice,
+    updatedAt: new Date(),
+  };
+
+  return product;
+});
+
+async function seedProducts() {
   await db.insert(productsTable).values(productsData);
 }
 
