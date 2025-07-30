@@ -5,13 +5,15 @@ import { AnalyticalSummary } from '~/sections/analytical-summary';
 import AnalyticalMonitoring from '~/sections/monitoring/AnalyticalMonitoring';
 import Shop from '~/sections/Shop';
 import type { Route } from './+types/sales-overview';
-import { and, between, ilike } from 'drizzle-orm';
+import { and, asc, between, desc, ilike } from 'drizzle-orm';
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
   const search = url.searchParams.get('search') || '';
   const dateFrom = url.searchParams.get('dateFrom');
   const dateTo = url.searchParams.get('dateTo');
+  const order = url.searchParams.get('order') || 'asc';
+  // const orderBy = url.searchParams.get('orderBy') || productsTable.name;
 
   const conditions = [ilike(productsTable.name, `%${search}%`)];
 
@@ -25,6 +27,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     .select()
     .from(productsTable)
     .where(and(...conditions))
+    .orderBy(order === 'asc' ? asc(productsTable) : desc(productsTable.name))
     .limit(4);
 
   return { products: results, total };

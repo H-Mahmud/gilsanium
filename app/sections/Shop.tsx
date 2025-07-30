@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import StoreMap from './shop/StoreMap.client';
 import IconButton from '~/components/ui/IconButton';
 import { Form, useSearchParams } from 'react-router';
+import Select from '~/components/ui/Select';
 
 export default function Shop({
   products,
@@ -23,7 +24,7 @@ export default function Shop({
     }
   }, []);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <Card>
@@ -55,10 +56,22 @@ export default function Shop({
 
       <div className="mt-3 flex items-center justify-between">
         <span>1-8 of {total} Results</span>
-        <Button variant="outline">
-          Default sort
-          <SVGIcon className="size-4 bg-primary" src="/assets/icons/general/ic-open.svg" />
-        </Button>
+        <Select
+          items={[
+            { label: 'Ascending', value: 'asc' },
+            { label: 'Descending', value: 'desc' },
+          ]}
+          onValueChange={(value) => {
+            if (value) {
+              // searchParams.set('sort', value);
+              setSearchParams({ order: value });
+            } else {
+              searchParams.delete('order');
+            }
+          }}
+          placeholder="Default sort"
+          value={searchParams.get('order') || 'asc'}
+        />
       </div>
 
       <div className="mt-6 flex items-stretch justify-between gap-4">
