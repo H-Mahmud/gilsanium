@@ -19,8 +19,12 @@ export default function ProductCard({
   className,
 }: ProductCardProps) {
   return (
-    <div className={cn('relative shrink-0 overflow-hidden rounded-xl', className)}>
-      <img alt="laptop" className="h-full w-full bg-primary-contrast/5" src={image} />
+    <div className={cn('relative h-96 shrink-0 overflow-hidden rounded-xl', className)}>
+      <img
+        alt="laptop"
+        className="h-full w-full bg-primary-contrast/5 object-cover object-center"
+        src={image}
+      />
       <div className="absolute top-5 right-5 flex items-center gap-1">
         {isFeatured && (
           <span className="inline-block rounded-full bg-primary p-3 py-1.5 text-xs font-semibold text-white uppercase">
