@@ -10,12 +10,22 @@ import { and, asc, between, desc, ilike } from 'drizzle-orm';
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
   const search = url.searchParams.get('search') || '';
+
+  const range = url.searchParams.get('priceRange')?.split(',');
+
+  const priceRange: [number, number] = range
+    ? [parseInt(range[0]), parseInt(range[1])]
+    : [1, 100_000];
+
   const dateFrom = url.searchParams.get('dateFrom');
   const dateTo = url.searchParams.get('dateTo');
   const order = url.searchParams.get('order') || 'asc';
   // const orderBy = url.searchParams.get('orderBy') || productsTable.name;
 
-  const conditions = [ilike(productsTable.name, `%${search}%`)];
+  const conditions = [
+    ilike(productsTable.name, `%${search}%`),
+    between(productsTable.price, priceRange[0], priceRange[1]),
+  ];
 
   if (dateFrom && dateTo) {
     conditions.push(between(productsTable.createdAt, new Date(dateFrom), new Date(dateTo)));

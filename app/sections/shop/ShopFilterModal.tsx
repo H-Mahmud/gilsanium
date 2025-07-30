@@ -4,6 +4,8 @@ import SVGIcon from '~/components/ui/SVGIcon';
 import { Dialog } from 'radix-ui';
 import { cn } from '~/utils';
 import { Form, useSearchParams } from 'react-router';
+import RangeSlider from '~/components/ui/RangeSlider';
+import { useState } from 'react';
 
 export default function ShopFilterModal() {
   const [searchParams] = useSearchParams();
@@ -70,7 +72,7 @@ export default function ShopFilterModal() {
               <SectionLabel>Price Range</SectionLabel>
               <SectionLabel>Reset</SectionLabel>
             </div>
-            <TextInput className="w-full" id="price-range" name="price-range" type="range" />
+            <PriceRange />
           </div>
 
           <div className="mt-6 flex items-center justify-between">
@@ -108,5 +110,32 @@ function TextInput({ className, ...rest }: React.InputHTMLAttributes<HTMLInputEl
         className,
       )}
     />
+  );
+}
+
+function PriceRange() {
+  const [searchParams] = useSearchParams();
+  const range = searchParams.get('priceRange')?.split(',');
+
+  const defaultValue: [number, number] = range
+    ? [parseInt(range[0]), parseInt(range[1])]
+    : [1, 10_000];
+
+  const [priceRange, setPriceRange] = useState<[number, number]>(defaultValue);
+
+  console.log(priceRange);
+
+  return (
+    <>
+      <RangeSlider
+        max={10_000}
+        min={1}
+        onChange={(value) => {
+          setPriceRange(value);
+        }}
+        values={priceRange}
+      />
+      <input name="priceRange" type="hidden" value={priceRange.toString()} />
+    </>
   );
 }
