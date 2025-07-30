@@ -5,13 +5,19 @@ import { AnalyticalSummary } from '~/sections/analytical-summary';
 import AnalyticalMonitoring from '~/sections/monitoring/AnalyticalMonitoring';
 import Shop from '~/sections/Shop';
 import type { Route } from './+types/sales-overview';
-import { and, ilike } from 'drizzle-orm';
+import { and, between, ilike } from 'drizzle-orm';
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
   const search = url.searchParams.get('search') || '';
+  const dateFrom = url.searchParams.get('dateFrom');
+  const dateTo = url.searchParams.get('dateTo');
 
   const conditions = [ilike(productsTable.name, `%${search}%`)];
+
+  if (dateFrom && dateTo) {
+    conditions.push(between(productsTable.createdAt, new Date(dateFrom), new Date(dateTo)));
+  }
 
   const total = await db.$count(productsTable, ...conditions);
 

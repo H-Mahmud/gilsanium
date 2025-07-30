@@ -3,8 +3,10 @@ import IconButton from '~/components/ui/IconButton';
 import SVGIcon from '~/components/ui/SVGIcon';
 import { Dialog } from 'radix-ui';
 import { cn } from '~/utils';
+import { Form, useSearchParams } from 'react-router';
 
 export default function ShopFilterModal() {
+  const [searchParams] = useSearchParams();
   return (
     <Dialog.Root>
       <Dialog.Trigger>
@@ -13,57 +15,69 @@ export default function ShopFilterModal() {
         </IconButton>
       </Dialog.Trigger>
       <Dialog.Content className="absolute top-[52px] right-0 z-10 flex flex-col gap-y-6 rounded-lg border border-card-border bg-white p-6 select-none">
-        <p className="mb-6 text-sm font-medium text-app-gray">Filter by:</p>
-        <div className="border-b border-[#ECEDF0] pb-4">
-          <div className="mb-4 flex items-center justify-between">
-            <SectionLabel>Date Range</SectionLabel>
-            <SectionLabel>Reset</SectionLabel>
-          </div>
-          <div className="mb-3 flex items-center justify-between gap-5">
-            <div className="flex flex-col gap-3">
-              <InputLabel htmlFor="date-from">From</InputLabel>
-              <TextInput id="date-from" type="date" />
+        <Form method="get" preventScrollReset>
+          <p className="mb-6 text-sm font-medium text-app-gray">Filter by:</p>
+          <div className="border-b border-[#ECEDF0] pb-4">
+            <div className="mb-4 flex items-center justify-between">
+              <SectionLabel>Date Range</SectionLabel>
+              <SectionLabel>Reset</SectionLabel>
             </div>
-            <div className="flex flex-col gap-3">
-              <InputLabel htmlFor="date-to">To</InputLabel>
-              <TextInput id="date-to" type="date" />
+            <div className="mb-3 flex items-center justify-between gap-5">
+              <div className="flex flex-col gap-3">
+                <InputLabel htmlFor="date-from">From</InputLabel>
+                <TextInput
+                  defaultValue={searchParams.get('dateFrom') || ''}
+                  id="date-from"
+                  name="dateFrom"
+                  type="date"
+                />
+              </div>
+              <div className="flex flex-col gap-3">
+                <InputLabel htmlFor="date-to">To</InputLabel>
+                <TextInput
+                  defaultValue={searchParams.get('dateTo') || ''}
+                  id="date-to"
+                  name="dateTo"
+                  type="date"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
+                Today
+              </Button>
+              <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
+                This Week
+              </Button>
+              <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
+                This Month
+              </Button>
             </div>
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
-              Today
-            </Button>
-            <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
-              This Week
-            </Button>
-            <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
-              This Month
+          <div className="mt-6 border-b border-[#ECEDF0] pb-4">
+            <div className="mb-4 flex items-center justify-between">
+              <SectionLabel>Amount</SectionLabel>
+              <SectionLabel>Reset</SectionLabel>
+            </div>
+            <Button className="w-full justify-between" variant="ghost">
+              Low to High (Lowest First){' '}
+              <SVGIcon className="size-2.5" src="/assets/icons/general/ic-arrow-down.svg" />
             </Button>
           </div>
-        </div>
-        <div className="mt-6 border-b border-[#ECEDF0] pb-4">
-          <div className="mb-4 flex items-center justify-between">
-            <SectionLabel>Amount</SectionLabel>
-            <SectionLabel>Reset</SectionLabel>
-          </div>
-          <Button className="w-full" variant="ghost">
-            Low to High (Lowest First){' '}
-            <SVGIcon className="size-2.5" src="/assets/icons/general/ic-arrow-down.svg" />
-          </Button>
-        </div>
 
-        <div className="mt-6 border-b border-[#ECEDF0] pb-4">
-          <div className="flex items-center justify-between">
-            <SectionLabel>Price Range</SectionLabel>
-            <SectionLabel>Reset</SectionLabel>
+          <div className="mt-6 border-b border-[#ECEDF0] pb-4">
+            <div className="flex items-center justify-between">
+              <SectionLabel>Price Range</SectionLabel>
+              <SectionLabel>Reset</SectionLabel>
+            </div>
+            <TextInput className="w-full" id="price-range" name="price-range" type="range" />
           </div>
-          <TextInput className="w-full" id="price-range" name="price-range" type="range" />
-        </div>
 
-        <div className="mt-6 flex items-center justify-between">
-          <Button className="bg-primary-contrast/5 text-primary-contrast">Reset All</Button>
-          <Button className="bg-primary-contrast">Apply Filers (3)</Button>
-        </div>
+          <div className="mt-6 flex items-center justify-between">
+            <Button className="bg-primary-contrast/5 text-primary-contrast">Reset All</Button>
+            <Button className="bg-primary-contrast">Apply Filers (3)</Button>
+          </div>
+        </Form>
       </Dialog.Content>
     </Dialog.Root>
   );
