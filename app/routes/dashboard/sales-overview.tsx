@@ -5,7 +5,7 @@ import { AnalyticalSummary } from '~/sections/analytical-summary';
 import AnalyticalMonitoring from '~/sections/monitoring/AnalyticalMonitoring';
 import Shop from '~/sections/Shop';
 import type { Route } from './+types/sales-overview';
-import { and, asc, between, desc, eq, ilike, SQL } from 'drizzle-orm';
+import { and, asc, between, desc, eq, ilike, type SQL } from 'drizzle-orm';
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
