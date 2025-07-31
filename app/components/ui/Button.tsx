@@ -11,6 +11,7 @@ export function Button({
   variant = 'solid',
   className,
   children,
+  ...rest
 }: ButtonProps & React.ComponentPropsWithoutRef<'button'>) {
   return (
     <button
@@ -21,6 +22,7 @@ export function Button({
         variant === 'ghost' && 'bg-transparent text-primary',
         className,
       )}
+      {...rest}
     >
       {children}
     </button>
