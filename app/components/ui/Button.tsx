@@ -16,7 +16,7 @@ export function Button({
   return (
     <button
       className={cn(
-        'inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-card-border p-4 text-sm',
+        'inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-lg border border-card-border p-4 text-sm',
         variant === 'outline' && 'border border-icon-border text-primary',
         variant === 'solid' && 'bg-primary text-white',
         variant === 'ghost' && 'bg-transparent text-primary',
