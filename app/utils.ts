@@ -18,3 +18,9 @@ export function formatCurrency(
     maximumFractionDigits: decimalLimit,
   }).format(value);
 }
+
+export function getDiscountPercentage(regularPrice: number, offerPrice: number) {
+  if (regularPrice <= 0) return 0;
+  const discount = ((regularPrice - offerPrice) / regularPrice) * 100;
+  return Math.round(discount);
+}
