@@ -8,7 +8,6 @@ import StoreMap from './shop/StoreMap.client';
 import IconButton from '~/components/ui/IconButton';
 import { useNavigation, useSearchParams } from 'react-router';
 import Select from '~/components/ui/Select';
-import 'react-loading-skeleton/dist/skeleton.css';
 import Skeleton from 'react-loading-skeleton';
 
 export default function Shop({
