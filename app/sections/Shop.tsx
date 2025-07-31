@@ -1,5 +1,4 @@
 import ProductCard from '~/components/ProductCard';
-import { Button } from '~/components/ui/Button';
 import Card from '~/components/ui/Card';
 import SVGIcon from '~/components/ui/SVGIcon';
 import ShopFilterModal from './shop/ShopFilterModal';
@@ -29,10 +28,26 @@ export default function Shop({
   return (
     <Card>
       <div className="relative flex items-center justify-between gap-2">
-        <Button className="shrink-0" variant="outline">
-          For Sale
-          <SVGIcon className="ml-7 size-4" src="/assets/icons/general/ic-open.svg" />
-        </Button>
+        <Select
+          className="shrink-0"
+          items={[
+            { label: 'All product', value: 'all' },
+            { label: 'On Sale', value: 'onSale' },
+            { label: 'Featured', value: 'featured' },
+          ]}
+          onValueChange={(value) => {
+            if (value) {
+              if (value == 'all') {
+                searchParams.delete('tag');
+              } else {
+                searchParams.set('tag', value);
+              }
+              setSearchParams(searchParams, { preventScrollReset: true });
+            }
+          }}
+          placeholder="All Product"
+          value={searchParams.get('tag') || ''}
+        />
 
         <Form
           className="flex h-12 w-full basis-full rounded-md border border-gray-300"
