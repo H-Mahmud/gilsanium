@@ -74,7 +74,15 @@ export default function Shop({
         <div className="z-0 h-[786px] w-5/12 bg-amber-100 stroke-0">{isClient && <StoreMap />}</div>
         <div className="grid w-7/12 shrink-0 grid-cols-2 gap-4">
           {products.map((item) => (
-            <ProductCard image={item.image} key={item.id} price={item.price} title={item.name} />
+            <ProductCard
+              image={item.image}
+              isFeatured={item.featured}
+              key={item.id}
+              onSale={item.sale}
+              price={item.price}
+              salePrice={item.salePrice}
+              title={item.name}
+            />
           ))}
         </div>
       </div>

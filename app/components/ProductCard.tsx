@@ -1,4 +1,4 @@
-import { cn, formatCurrency } from '~/utils';
+import { cn, formatCurrency, getDiscountPercentage } from '~/utils';
 import IconButton from './ui/IconButton';
 import SVGIcon from './ui/SVGIcon';
 
@@ -6,15 +6,19 @@ type ProductCardProps = {
   image: string;
   title: string;
   price: string;
+  salePrice: string | null;
   isFeatured?: boolean;
+  onSale?: boolean;
   location?: string;
   className?: string;
 };
 export default function ProductCard({
   image,
   isFeatured,
+  onSale,
   title,
   price,
+  salePrice,
   location,
   className,
 }: ProductCardProps) {
@@ -31,11 +35,14 @@ export default function ProductCard({
             Featured
           </span>
         )}
-        {location && (
-          <IconButton className="size-7 rounded-full">
-            <SVGIcon className="size-4 bg-white" src="/assets/icons/general/ic-location.svg" />
-          </IconButton>
+        {onSale && (
+          <span className="inline-block rounded-full border-2 border-yellow-800 bg-yellow-700 p-3 py-1.5 text-xs font-semibold text-white uppercase">
+            {getDiscountPercentage(parseFloat(price), parseFloat(salePrice!))}% Discount
+          </span>
         )}
+        <IconButton className="size-7 rounded-full">
+          <SVGIcon className="size-4 bg-white" src="/assets/icons/general/ic-location.svg" />
+        </IconButton>
       </div>
       <div className="absolute bottom-0 flex w-full flex-col gap-1 bg-primary/70 px-4 py-5">
         <h3 className="text-base font-medium text-white">{title}</h3>
