@@ -16,7 +16,7 @@ export default function ShopFilterModal() {
   const [dateTo, setDateTo] = useState(searchParams.get('dateTo') || '');
   const [sort, setSort] = useState(searchParams.get('priceSort') || '');
   const [minPrice, setMinPrice] = useState(Number(searchParams.get('minPrice')) || 0);
-  const [maxPrice, setMaxPrice] = useState(Number(searchParams.get('maxPrice')) || 1000);
+  const [maxPrice, setMaxPrice] = useState(Number(searchParams.get('maxPrice')) || 10_000);
 
   const setToday = () => {
     const today = dayjs().format('YYYY-MM-DD');
@@ -80,16 +80,20 @@ export default function ShopFilterModal() {
           <SVGIcon className="size-7 bg-white" src="/assets/icons/general/ic-filter.svg" />
         </IconButton>
       </Dialog.Trigger>
-      <Dialog.Content className="absolute top-[52px] right-0 z-10 flex flex-col gap-y-6 rounded-lg border border-card-border bg-white p-6 select-none">
+      <Dialog.Content className="absolute top-[52px] right-0 z-10 flex flex-col rounded-lg border border-card-border bg-white p-6 select-none">
         <p className="mb-6 text-sm font-medium text-app-gray">Filter by:</p>
-        <div className="border-b border-[#ECEDF0] pb-4">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="border-b border-[#ECEDF0] pb-4.5">
+          <div className="mb-4.5 flex items-center justify-between">
             <SectionLabel>Date Range</SectionLabel>
-            <SectionLabel onClick={resetDates}>Reset</SectionLabel>
+            <SectionLabel className="cursor-pointer" onClick={resetDates}>
+              Reset
+            </SectionLabel>
           </div>
           <div className="mb-3 flex items-center justify-between gap-5">
-            <div className="flex flex-col gap-3">
-              <InputLabel htmlFor="date-from">From</InputLabel>
+            <div className="flex w-full flex-col gap-3">
+              <label className="mb-3 text-sm font-medium text-app-gray" htmlFor="date-from">
+                From
+              </label>
               <TextInput
                 id="date-from"
                 onChange={(e) => setDateFrom(e.target.value)}
@@ -97,8 +101,10 @@ export default function ShopFilterModal() {
                 value={dateFrom}
               />
             </div>
-            <div className="flex flex-col gap-3">
-              <InputLabel htmlFor="date-to">To</InputLabel>
+            <div className="flex w-full flex-col gap-3">
+              <label className="mb-3 text-sm font-medium text-app-gray" htmlFor="date-to">
+                To
+              </label>
               <TextInput
                 id="date-to"
                 onChange={(e) => setDateTo(e.target.value)}
@@ -107,6 +113,7 @@ export default function ShopFilterModal() {
               />
             </div>
           </div>
+
           <div className="flex items-center justify-between gap-3">
             <Button className="shrink-0 px-7 py-5 text-app-gray" onClick={setToday} variant="ghost">
               Today
@@ -127,10 +134,12 @@ export default function ShopFilterModal() {
             </Button>
           </div>
         </div>
-        <div className="mt-6 border-b border-[#ECEDF0] pb-4">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="mt-6 border-b border-[#ECEDF0] pb-4.5">
+          <div className="mb-4.5 flex items-center justify-between">
             <SectionLabel>Amount</SectionLabel>
-            <SectionLabel onClick={resetSort}>Reset</SectionLabel>
+            <SectionLabel className="cursor-pointer" onClick={resetSort}>
+              Reset
+            </SectionLabel>
           </div>
           <Select
             className="w-full justify-between"
@@ -148,14 +157,16 @@ export default function ShopFilterModal() {
           />
         </div>
 
-        <div className="mt-6 border-b border-[#ECEDF0] pb-4">
-          <div className="flex items-center justify-between">
+        <div className="mt-6 border-b border-[#ECEDF0] pb-4.5">
+          <div className="mb-4.5 flex items-center justify-between">
             <SectionLabel>Price Range</SectionLabel>
-            <SectionLabel onClick={resetPrices}>Reset</SectionLabel>
+            <SectionLabel className="cursor-pointer" onClick={resetPrices}>
+              Reset
+            </SectionLabel>
           </div>
           <RangeSlider
             max={10_000}
-            min={1}
+            min={0}
             onChange={(value) => {
               setMinPrice(value[0]);
               setMaxPrice(value[1]);
@@ -179,23 +190,11 @@ export default function ShopFilterModal() {
 type SectionLabelProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
 };
-function SectionLabel({ children, ...rest }: SectionLabelProps) {
+function SectionLabel({ children, className, ...rest }: SectionLabelProps) {
   return (
-    <button className="text-base font-semibold text-primary" {...rest}>
+    <button className={cn('text-base font-semibold text-primary', className)} {...rest}>
       {children}
     </button>
-  );
-}
-
-type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
-  children: React.ReactNode;
-};
-
-function InputLabel({ children, className, ...rest }: LabelProps) {
-  return (
-    <label {...rest} className={cn('text-sm font-medium text-app-gray', className)}>
-      {children}
-    </label>
   );
 }
 
@@ -204,7 +203,7 @@ function TextInput({ className, ...rest }: React.InputHTMLAttributes<HTMLInputEl
     <input
       {...rest}
       className={cn(
-        'rounded-xl border border-[#ecedf0] p-4 text-sm font-semibold text-app-gray',
+        'block w-full rounded-xl border border-[#ecedf0] p-4 text-sm font-semibold text-app-gray',
         className,
       )}
     />
