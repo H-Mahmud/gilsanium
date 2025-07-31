@@ -46,7 +46,7 @@ export default function ShopFilterModal() {
   const resetSort = () => setSort('');
   const resetPrices = () => {
     setMinPrice(0);
-    setMaxPrice(1000);
+    setMaxPrice(10_000);
   };
 
   const resetAll = () => {
@@ -59,18 +59,29 @@ export default function ShopFilterModal() {
     let count = 0;
     if (dateFrom || dateTo) count++;
     if (sort) count++;
-    if (minPrice !== 0 || maxPrice !== 1000) count++;
+    if (minPrice !== 0 || maxPrice !== 10_000) count++;
     return count;
   }, [dateFrom, dateTo, sort, minPrice, maxPrice]);
 
   const applyFilters = () => {
-    const params = new URLSearchParams();
-    if (dateFrom) params.set('dateFrom', dateFrom);
-    if (dateTo) params.set('dateTo', dateTo);
-    if (sort) params.set('priceSort', sort);
-    if (minPrice !== 0) params.set('minPrice', minPrice.toString());
-    if (maxPrice !== 1000) params.set('maxPrice', maxPrice.toString());
-    setSearchParams(params);
+    if (dateFrom && dateTo) {
+      searchParams.set('dateFrom', dateFrom);
+      searchParams.set('dateTo', dateTo);
+    } else {
+      searchParams.delete('dateFrom');
+      searchParams.delete('dateTo');
+    }
+
+    if (sort) searchParams.set('priceSort', sort);
+    else searchParams.delete('priceSort');
+
+    if (minPrice !== 0) searchParams.set('minPrice', minPrice.toString());
+    else searchParams.delete('minPrice');
+
+    if (maxPrice !== 10_000) searchParams.set('maxPrice', maxPrice.toString());
+    else searchParams.delete('maxPrice');
+
+    setSearchParams(searchParams, { preventScrollReset: true });
   };
 
   return (
