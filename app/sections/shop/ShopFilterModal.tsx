@@ -3,12 +3,76 @@ import IconButton from '~/components/ui/IconButton';
 import SVGIcon from '~/components/ui/SVGIcon';
 import { Dialog } from 'radix-ui';
 import { cn } from '~/utils';
-import { Form, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import RangeSlider from '~/components/ui/RangeSlider';
-import { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import Select from '~/components/ui/Select';
+import dayjs from 'dayjs';
 
 export default function ShopFilterModal() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [dateFrom, setDateFrom] = useState(searchParams.get('dateFrom') || '');
+  const [dateTo, setDateTo] = useState(searchParams.get('dateTo') || '');
+  const [sort, setSort] = useState(searchParams.get('priceSort') || '');
+  const [minPrice, setMinPrice] = useState(Number(searchParams.get('minPrice')) || 0);
+  const [maxPrice, setMaxPrice] = useState(Number(searchParams.get('maxPrice')) || 1000);
+
+  const setToday = () => {
+    const today = dayjs().format('YYYY-MM-DD');
+    setDateFrom(today);
+    setDateTo(today);
+  };
+
+  const setThisWeek = () => {
+    const start = dayjs().startOf('week').format('YYYY-MM-DD');
+    const end = dayjs().endOf('week').format('YYYY-MM-DD');
+    setDateFrom(start);
+    setDateTo(end);
+  };
+
+  const setThisMonth = () => {
+    const start = dayjs().startOf('month').format('YYYY-MM-DD');
+    const end = dayjs().endOf('month').format('YYYY-MM-DD');
+    setDateFrom(start);
+    setDateTo(end);
+  };
+
+  const resetDates = () => {
+    setDateFrom('');
+    setDateTo('');
+  };
+
+  const resetSort = () => setSort('');
+  const resetPrices = () => {
+    setMinPrice(0);
+    setMaxPrice(1000);
+  };
+
+  const resetAll = () => {
+    resetDates();
+    resetSort();
+    resetPrices();
+  };
+
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (dateFrom || dateTo) count++;
+    if (sort) count++;
+    if (minPrice !== 0 || maxPrice !== 1000) count++;
+    return count;
+  }, [dateFrom, dateTo, sort, minPrice, maxPrice]);
+
+  const applyFilters = () => {
+    const params = new URLSearchParams();
+    if (dateFrom) params.set('dateFrom', dateFrom);
+    if (dateTo) params.set('dateTo', dateTo);
+    if (sort) params.set('priceSort', sort);
+    if (minPrice !== 0) params.set('minPrice', minPrice.toString());
+    if (maxPrice !== 1000) params.set('maxPrice', maxPrice.toString());
+    setSearchParams(params);
+  };
+
   return (
     <Dialog.Root>
       <Dialog.Trigger>
@@ -17,76 +81,110 @@ export default function ShopFilterModal() {
         </IconButton>
       </Dialog.Trigger>
       <Dialog.Content className="absolute top-[52px] right-0 z-10 flex flex-col gap-y-6 rounded-lg border border-card-border bg-white p-6 select-none">
-        <Form method="get" preventScrollReset>
-          <p className="mb-6 text-sm font-medium text-app-gray">Filter by:</p>
-          <div className="border-b border-[#ECEDF0] pb-4">
-            <div className="mb-4 flex items-center justify-between">
-              <SectionLabel>Date Range</SectionLabel>
-              <SectionLabel>Reset</SectionLabel>
+        <p className="mb-6 text-sm font-medium text-app-gray">Filter by:</p>
+        <div className="border-b border-[#ECEDF0] pb-4">
+          <div className="mb-4 flex items-center justify-between">
+            <SectionLabel>Date Range</SectionLabel>
+            <SectionLabel onClick={resetDates}>Reset</SectionLabel>
+          </div>
+          <div className="mb-3 flex items-center justify-between gap-5">
+            <div className="flex flex-col gap-3">
+              <InputLabel htmlFor="date-from">From</InputLabel>
+              <TextInput
+                id="date-from"
+                onChange={(e) => setDateFrom(e.target.value)}
+                type="date"
+                value={dateFrom}
+              />
             </div>
-            <div className="mb-3 flex items-center justify-between gap-5">
-              <div className="flex flex-col gap-3">
-                <InputLabel htmlFor="date-from">From</InputLabel>
-                <TextInput
-                  defaultValue={searchParams.get('dateFrom') || ''}
-                  id="date-from"
-                  name="dateFrom"
-                  type="date"
-                />
-              </div>
-              <div className="flex flex-col gap-3">
-                <InputLabel htmlFor="date-to">To</InputLabel>
-                <TextInput
-                  defaultValue={searchParams.get('dateTo') || ''}
-                  id="date-to"
-                  name="dateTo"
-                  type="date"
-                />
-              </div>
-            </div>
-            <div className="flex items-center justify-between gap-3">
-              <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
-                Today
-              </Button>
-              <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
-                This Week
-              </Button>
-              <Button className="shrink-0 px-7 py-5 text-app-gray" variant="ghost">
-                This Month
-              </Button>
+            <div className="flex flex-col gap-3">
+              <InputLabel htmlFor="date-to">To</InputLabel>
+              <TextInput
+                id="date-to"
+                onChange={(e) => setDateTo(e.target.value)}
+                type="date"
+                value={dateTo}
+              />
             </div>
           </div>
-          <div className="mt-6 border-b border-[#ECEDF0] pb-4">
-            <div className="mb-4 flex items-center justify-between">
-              <SectionLabel>Amount</SectionLabel>
-              <SectionLabel>Reset</SectionLabel>
-            </div>
-            <Button className="w-full justify-between" variant="ghost">
-              Low to High (Lowest First){' '}
-              <SVGIcon className="size-2.5" src="/assets/icons/general/ic-arrow-down.svg" />
+          <div className="flex items-center justify-between gap-3">
+            <Button className="shrink-0 px-7 py-5 text-app-gray" onClick={setToday} variant="ghost">
+              Today
+            </Button>
+            <Button
+              className="shrink-0 px-7 py-5 text-app-gray"
+              onClick={setThisWeek}
+              variant="ghost"
+            >
+              This Week
+            </Button>
+            <Button
+              className="shrink-0 px-7 py-5 text-app-gray"
+              onClick={setThisMonth}
+              variant="ghost"
+            >
+              This Month
             </Button>
           </div>
-
-          <div className="mt-6 border-b border-[#ECEDF0] pb-4">
-            <div className="flex items-center justify-between">
-              <SectionLabel>Price Range</SectionLabel>
-              <SectionLabel>Reset</SectionLabel>
-            </div>
-            <PriceRange />
+        </div>
+        <div className="mt-6 border-b border-[#ECEDF0] pb-4">
+          <div className="mb-4 flex items-center justify-between">
+            <SectionLabel>Amount</SectionLabel>
+            <SectionLabel onClick={resetSort}>Reset</SectionLabel>
           </div>
+          <Select
+            className="w-full justify-between"
+            items={[
+              { label: 'Low to Hight (Lowest First)', value: 'asc' },
+              {
+                label: 'High to Low (Highest First)',
+                value: 'desc',
+              },
+            ]}
+            onValueChange={(value) => {
+              setSort(value);
+            }}
+            value={sort}
+          />
+        </div>
 
-          <div className="mt-6 flex items-center justify-between">
-            <Button className="bg-primary-contrast/5 text-primary-contrast">Reset All</Button>
-            <Button className="bg-primary-contrast">Apply Filers (3)</Button>
+        <div className="mt-6 border-b border-[#ECEDF0] pb-4">
+          <div className="flex items-center justify-between">
+            <SectionLabel>Price Range</SectionLabel>
+            <SectionLabel onClick={resetPrices}>Reset</SectionLabel>
           </div>
-        </Form>
+          <RangeSlider
+            max={10_000}
+            min={1}
+            onChange={(value) => {
+              setMinPrice(value[0]);
+              setMaxPrice(value[1]);
+            }}
+            values={[minPrice, maxPrice]}
+          />
+        </div>
+
+        <div className="mt-6 flex items-center justify-between">
+          <Button className="bg-primary-contrast/5 text-primary-contrast" onClick={resetAll}>
+            Reset All
+          </Button>
+          <Button className="bg-primary-contrast" onClick={applyFilters}>
+            Apply Filers {activeFilterCount ? <>({activeFilterCount})</> : null}
+          </Button>
+        </div>
       </Dialog.Content>
     </Dialog.Root>
   );
 }
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-base font-semibold text-primary">{children}</p>;
+type SectionLabelProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  children: React.ReactNode;
+};
+function SectionLabel({ children, ...rest }: SectionLabelProps) {
+  return (
+    <button className="text-base font-semibold text-primary" {...rest}>
+      {children}
+    </button>
+  );
 }
 
 type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
@@ -110,32 +208,5 @@ function TextInput({ className, ...rest }: React.InputHTMLAttributes<HTMLInputEl
         className,
       )}
     />
-  );
-}
-
-function PriceRange() {
-  const [searchParams] = useSearchParams();
-  const range = searchParams.get('priceRange')?.split(',');
-
-  const defaultValue: [number, number] = range
-    ? [parseInt(range[0]), parseInt(range[1])]
-    : [1, 10_000];
-
-  const [priceRange, setPriceRange] = useState<[number, number]>(defaultValue);
-
-  console.log(priceRange);
-
-  return (
-    <>
-      <RangeSlider
-        max={10_000}
-        min={1}
-        onChange={(value) => {
-          setPriceRange(value);
-        }}
-        values={priceRange}
-      />
-      <input name="priceRange" type="hidden" value={priceRange.toString()} />
-    </>
   );
 }
