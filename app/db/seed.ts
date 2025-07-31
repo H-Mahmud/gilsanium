@@ -103,9 +103,9 @@ export const main = async () => {
     console.log('🌱 Seeding...');
     await seedProducts();
     console.log('✅ Seeding complete!');
-    process.exit(0);
+    // process.exit(0);
   } catch (err) {
     console.error('❌ Seeding failed:', err);
-    process.exit(1);
+    // process.exit(1);
   }
 };
