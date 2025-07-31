@@ -53,7 +53,7 @@ export default function Shop({
       </div>
 
       <div className="mt-3 flex items-center justify-between">
-        <span>1-8 of {total} Results</span>
+        <span>1-4 of {total} Results</span>
         <Select
           items={[
             { label: 'Sort by latest', value: 'latest' },
