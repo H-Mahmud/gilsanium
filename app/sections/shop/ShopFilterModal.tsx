@@ -175,11 +175,14 @@ export default function ShopFilterModal() {
           />
         </div>
 
-        <div className="mt-6 flex items-center justify-between">
-          <Button className="bg-primary-contrast/5 text-primary-contrast" onClick={resetAll}>
+        <div className="mt-6 flex items-center justify-between gap-x-4.5">
+          <Button
+            className="h-14 w-full bg-primary-contrast/5 text-primary-contrast"
+            onClick={resetAll}
+          >
             Reset All
           </Button>
-          <Button className="bg-primary-contrast" onClick={applyFilters}>
+          <Button className="h-14 w-full bg-primary-contrast" onClick={applyFilters}>
             Apply Filers {activeFilterCount ? <>({activeFilterCount})</> : null}
           </Button>
         </div>
