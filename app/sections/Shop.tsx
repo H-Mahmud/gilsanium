@@ -57,7 +57,7 @@ export default function Shop({
         <Select
           items={[
             { label: 'Sort by latest', value: 'latest' },
-            { label: 'Sort by popularity', value: 'popularity' },
+            { label: 'Sort by oldest', value: 'oldest' },
           ]}
           onValueChange={(value) => {
             if (value) {
