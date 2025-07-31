@@ -6,7 +6,7 @@ import type { productsTable } from '~/db/schema';
 import { useEffect, useState } from 'react';
 import StoreMap from './shop/StoreMap.client';
 import IconButton from '~/components/ui/IconButton';
-import { Form, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import Select from '~/components/ui/Select';
 
 export default function Shop({
@@ -48,24 +48,7 @@ export default function Shop({
           placeholder="All Product"
           value={searchParams.get('tag') || ''}
         />
-
-        <Form
-          className="flex h-12 w-full basis-full rounded-md border border-gray-300"
-          method="get"
-          preventScrollReset
-        >
-          <input
-            className="h-full w-full px-3 py-2 focus:outline-none"
-            defaultValue={searchParams.get('search') || ''}
-            name="search"
-            placeholder="Search Shop"
-            type="text"
-          />
-          <IconButton className="h-full w-12" variant="ghost">
-            <SVGIcon className="size-7 bg-primary" src="/assets/icons/general/ic-search.svg" />
-          </IconButton>
-        </Form>
-
+        <SearchForm />
         <ShopFilterModal />
       </div>
 
@@ -96,5 +79,37 @@ export default function Shop({
         </div>
       </div>
     </Card>
+  );
+}
+
+function SearchForm() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+
+  return (
+    <div className="flex h-12 w-full basis-full rounded-md border border-gray-300">
+      <input
+        className="h-full w-full px-3 py-2 focus:outline-none"
+        name="search"
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="Search Shop"
+        type="search"
+        value={searchQuery}
+      />
+      <IconButton
+        className="h-full w-12"
+        onClick={() => {
+          if (searchQuery) {
+            searchParams.set('search', searchQuery);
+          } else {
+            searchParams.delete('search');
+          }
+          setSearchParams(searchParams, { preventScrollReset: true });
+        }}
+        variant="ghost"
+      >
+        <SVGIcon className="size-7 bg-primary" src="/assets/icons/general/ic-search.svg" />
+      </IconButton>
+    </div>
   );
 }
