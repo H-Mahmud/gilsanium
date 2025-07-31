@@ -5,7 +5,7 @@ import { Dialog } from 'radix-ui';
 import { cn } from '~/utils';
 import { useSearchParams } from 'react-router';
 import RangeSlider from '~/components/ui/RangeSlider';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Select from '~/components/ui/Select';
 import dayjs from 'dayjs';
 

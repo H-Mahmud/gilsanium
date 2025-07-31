@@ -1,0 +1,97 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/sales-overview": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "app/root.tsx",
+        "config": {}
+      },
+      "routes/home": {
+        "id": "routes/home",
+        "parentId": "root",
+        "file": "app/routes/home.tsx",
+        "index": true,
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/layout": {
+        "id": "routes/dashboard/layout",
+        "parentId": "root",
+        "file": "app/routes/dashboard/layout.tsx",
+        "config": {}
+      },
+      "routes/dashboard/sales-overview": {
+        "id": "routes/dashboard/sales-overview",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/sales-overview.tsx",
+        "path": "dashboard/sales-overview",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "/home/mahmud/projects/gilsanium/app",
+    "basename": "/",
+    "buildDirectory": "/home/mahmud/projects/gilsanium/build",
+    "future": {
+      "unstable_middleware": false,
+      "unstable_optimizeDeps": false,
+      "unstable_splitRouteModules": false,
+      "unstable_subResourceIntegrity": false,
+      "unstable_viteEnvironmentApi": false
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "root.tsx"
+      },
+      "routes/home": {
+        "id": "routes/home",
+        "parentId": "root",
+        "file": "routes/home.tsx",
+        "index": true
+      },
+      "routes/dashboard/layout": {
+        "id": "routes/dashboard/layout",
+        "parentId": "root",
+        "file": "routes/dashboard/layout.tsx"
+      },
+      "routes/dashboard/sales-overview": {
+        "id": "routes/dashboard/sales-overview",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/sales-overview.tsx",
+        "path": "dashboard/sales-overview"
+      }
+    },
+    "routeDiscovery": {
+      "mode": "lazy",
+      "manifestPath": "/__manifest"
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}
