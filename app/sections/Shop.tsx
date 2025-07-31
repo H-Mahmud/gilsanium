@@ -65,8 +65,6 @@ export default function Shop({
             if (value) {
               searchParams.set('sortBy', value);
               setSearchParams(searchParams, { preventScrollReset: true });
-            } else {
-              searchParams.delete('sortBy');
             }
           }}
           placeholder="Default sort"
