@@ -10,6 +10,7 @@ import Select from '~/components/ui/Select';
 import dayjs from 'dayjs';
 
 export default function ShopFilterModal() {
+  const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [dateFrom, setDateFrom] = useState(searchParams.get('dateFrom') || '');
@@ -82,10 +83,11 @@ export default function ShopFilterModal() {
     else searchParams.delete('maxPrice');
 
     setSearchParams(searchParams, { preventScrollReset: true });
+    setOpen(false);
   };
 
   return (
-    <Dialog.Root>
+    <Dialog.Root onOpenChange={setOpen} open={open}>
       <Dialog.Trigger asChild>
         <IconButton className="size-12 shrink-0" variant="solid">
           <SVGIcon className="size-7 bg-white" src="/assets/icons/general/ic-filter.svg" />
