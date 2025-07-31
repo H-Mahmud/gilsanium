@@ -72,8 +72,8 @@ export default function ShopFilterModal() {
       searchParams.delete('dateTo');
     }
 
-    if (sort) searchParams.set('priceSort', sort);
-    else searchParams.delete('priceSort');
+    if (sort) searchParams.set('orderByPrice', sort);
+    else searchParams.delete('orderByPrice');
 
     if (minPrice !== 0) searchParams.set('minPrice', minPrice.toString());
     else searchParams.delete('minPrice');
