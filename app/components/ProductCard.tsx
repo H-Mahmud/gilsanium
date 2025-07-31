@@ -19,7 +19,6 @@ export default function ProductCard({
   title,
   price,
   salePrice,
-  location,
   className,
 }: ProductCardProps) {
   return (
