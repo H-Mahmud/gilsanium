@@ -86,13 +86,14 @@ export default function ShopFilterModal() {
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger>
+      <Dialog.Trigger asChild>
         <IconButton className="size-12 shrink-0" variant="solid">
           <SVGIcon className="size-7 bg-white" src="/assets/icons/general/ic-filter.svg" />
         </IconButton>
       </Dialog.Trigger>
       <Dialog.Content className="absolute top-[52px] right-0 z-10 flex flex-col rounded-lg border border-card-border bg-white p-6 select-none">
-        <p className="mb-6 text-sm font-medium text-app-gray">Filter by:</p>
+        <Dialog.Title className="mb-6 text-sm font-medium text-app-gray">Filter by:</Dialog.Title>
+        <Dialog.Description className="sr-only">Product Filters</Dialog.Description>
         <div className="border-b border-[#ECEDF0] pb-4.5">
           <div className="mb-4.5 flex items-center justify-between">
             <SectionLabel>Date Range</SectionLabel>
