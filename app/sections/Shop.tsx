@@ -58,19 +58,19 @@ export default function Shop({
         <span>1-8 of {total} Results</span>
         <Select
           items={[
-            { label: 'Ascending', value: 'asc' },
-            { label: 'Descending', value: 'desc' },
+            { label: 'Sort by latest', value: 'latest' },
+            { label: 'Sort by popularity', value: 'popularity' },
           ]}
           onValueChange={(value) => {
             if (value) {
-              // searchParams.set('sort', value);
-              setSearchParams({ order: value });
+              searchParams.set('sortBy', value);
+              setSearchParams(searchParams, { preventScrollReset: true });
             } else {
-              searchParams.delete('order');
+              searchParams.delete('sortBy');
             }
           }}
           placeholder="Default sort"
-          value={searchParams.get('order') || 'asc'}
+          value={searchParams.get('sortBy') || ''}
         />
       </div>
 
