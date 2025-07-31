@@ -26,7 +26,7 @@ export default function Shop({
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
-    <Card>
+    <Card className="mt-6">
       <div className="relative flex items-center justify-between gap-2">
         <Select
           className="shrink-0"
