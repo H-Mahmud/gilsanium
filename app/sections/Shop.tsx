@@ -6,8 +6,10 @@ import type { productsTable } from '~/db/schema';
 import { useEffect, useState } from 'react';
 import StoreMap from './shop/StoreMap.client';
 import IconButton from '~/components/ui/IconButton';
-import { useSearchParams } from 'react-router';
+import { useNavigation, useSearchParams } from 'react-router';
 import Select from '~/components/ui/Select';
+import 'react-loading-skeleton/dist/skeleton.css';
+import Skeleton from 'react-loading-skeleton';
 
 export default function Shop({
   products,
@@ -24,9 +26,10 @@ export default function Shop({
   }, []);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const { state } = useNavigation();
 
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 mb-8">
       <div className="relative flex items-center justify-between gap-2">
         <Select
           className="shrink-0"
@@ -72,21 +75,31 @@ export default function Shop({
 
       <div className="mt-6 flex items-stretch justify-between gap-4">
         <div className="z-0 h-[786px] w-5/12 bg-amber-100 stroke-0">{isClient && <StoreMap />}</div>
+
         <div className="grid w-7/12 shrink-0 grid-cols-2 gap-4">
-          {products.length ? (
-            products.map((item) => (
-              <ProductCard
-                image={item.image}
-                isFeatured={item.featured}
-                key={item.id}
-                onSale={item.sale}
-                price={item.price}
-                salePrice={item.salePrice}
-                title={item.name}
-              />
-            ))
+          {state === 'idle' ? (
+            products.length ? (
+              products.map((item) => (
+                <ProductCard
+                  image={item.image}
+                  isFeatured={item.featured}
+                  key={item.id}
+                  onSale={item.sale}
+                  price={item.price}
+                  salePrice={item.salePrice}
+                  title={item.name}
+                />
+              ))
+            ) : (
+              <h2 className="text-center text-3xl font-bold">No product found!</h2>
+            )
           ) : (
-            <h2 className="text-center text-3xl font-bold">No product found!</h2>
+            <>
+              <Skeleton className="h-96 rounded-xl" />
+              <Skeleton className="h-96 rounded-xl" />
+              <Skeleton className="h-96 rounded-xl" />
+              <Skeleton className="h-96 rounded-xl" />
+            </>
           )}
         </div>
       </div>
