@@ -5,42 +5,68 @@ import { AnalyticalSummary } from '~/sections/analytical-summary';
 import AnalyticalMonitoring from '~/sections/monitoring/AnalyticalMonitoring';
 import Shop from '~/sections/Shop';
 import type { Route } from './+types/sales-overview';
-import { and, asc, between, desc, ilike } from 'drizzle-orm';
+import { and, asc, between, desc, eq, ilike, SQL } from 'drizzle-orm';
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
-  const search = url.searchParams.get('search') || '';
+  const params = url.searchParams;
 
-  const range = url.searchParams.get('priceRange')?.split(',');
+  const filters = [];
 
-  const priceRange: [number, number] = range
-    ? [parseInt(range[0]), parseInt(range[1])]
-    : [1, 100_000];
+  const search = params.get('search');
+  const minPrice = params.get('minPrice');
+  const maxPrice = params.get('maxPrice');
+  const dateFrom = params.get('dateFrom');
+  const dateTo = params.get('dateTo');
+  const tag = params.get('tag');
+  const sortBy = params.get('sortBy');
+  const orderByPrice = params.get('orderByPrice');
+  const offset = parseInt(params.get('offset') || '0');
+  const limit = 4;
 
-  const dateFrom = url.searchParams.get('dateFrom');
-  const dateTo = url.searchParams.get('dateTo');
-  const order = url.searchParams.get('order') || 'asc';
-  // const orderBy = url.searchParams.get('orderBy') || productsTable.name;
+  if (search) filters.push(ilike(productsTable.name, `%${search}%`));
 
-  const conditions = [
-    ilike(productsTable.name, `%${search}%`),
-    between(productsTable.price, priceRange[0], priceRange[1]),
-  ];
-
-  if (dateFrom && dateTo) {
-    conditions.push(between(productsTable.createdAt, new Date(dateFrom), new Date(dateTo)));
+  if (minPrice && maxPrice) {
+    filters.push(between(productsTable.price, minPrice, maxPrice));
   }
 
-  const total = await db.$count(productsTable, ...conditions);
+  if (dateFrom && dateTo) {
+    filters.push(between(productsTable.createdAt, new Date(dateFrom), new Date(dateTo)));
+  }
 
-  const results = await db
-    .select()
-    .from(productsTable)
-    .where(and(...conditions))
-    .orderBy(order === 'asc' ? asc(productsTable) : desc(productsTable.name))
-    .limit(4);
+  if (tag === 'featured') filters.push(eq(productsTable.featured, true));
+  if (tag === 'forSale') filters.push(eq(productsTable.sale, true));
 
-  return { products: results, total };
+  const orderFields: SQL<unknown>[] = [];
+
+  if (orderByPrice) {
+    if (orderByPrice === 'asc') {
+      orderFields.push(asc(productsTable.price));
+    } else if (orderByPrice === 'desc') {
+      orderFields.push(desc(productsTable.price));
+    }
+  }
+  if (sortBy) {
+    if (sortBy === 'latest') {
+      orderFields.push(asc(productsTable.createdAt));
+    } else if (sortBy === 'oldest') {
+      orderFields.push(desc(productsTable.createdAt));
+    }
+  }
+
+  const whereClause = filters.length ? and(...filters) : undefined;
+
+  const total = await db.$count(productsTable, whereClause);
+
+  const query = db.select().from(productsTable).where(whereClause).limit(limit).offset(offset);
+
+  if (orderFields.length) {
+    query.orderBy(...orderFields);
+  }
+
+  const result = await query;
+
+  return { products: result, total: total };
 }
 
 export function meta() {
