@@ -35,7 +35,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   }
 
   if (tag === 'featured') filters.push(eq(productsTable.featured, true));
-  if (tag === 'forSale') filters.push(eq(productsTable.sale, true));
+  if (tag === 'onSale') filters.push(eq(productsTable.sale, true));
 
   const orderFields: SQL<unknown>[] = [];
 
