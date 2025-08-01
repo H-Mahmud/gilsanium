@@ -29,7 +29,7 @@ const productData: ProductMonitoringItem[] = [
     image: '/assets/images/products/03-thumbnail.png',
   },
   {
-    id: 3,
+    id: 4,
     name: 'Headphone',
     orderCount: 10,
     image: '/assets/images/products/04-thumbnail.png',
@@ -56,7 +56,7 @@ export default function ProductMonitor() {
 
       <div>
         {productData.map((item) => (
-          <ProductMonitoringItem {...item} active={item.id === 1} />
+          <ProductMonitoringItem key={item.id} {...item} active={item.id === 1} />
         ))}
         <p className="block cursor-pointer pt-5 text-center text-xs text-primary/50 underline">
           View all Details
