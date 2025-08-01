@@ -76,11 +76,13 @@ export default function ShopFilterModal() {
     if (sort) searchParams.set('orderByPrice', sort);
     else searchParams.delete('orderByPrice');
 
-    if (minPrice !== 0) searchParams.set('minPrice', minPrice.toString());
-    else searchParams.delete('minPrice');
-
-    if (maxPrice !== 10_000) searchParams.set('maxPrice', maxPrice.toString());
-    else searchParams.delete('maxPrice');
+    if (minPrice !== 0 || maxPrice !== 10_000) {
+      searchParams.set('minPrice', minPrice.toString());
+      searchParams.set('maxPrice', maxPrice.toString());
+    } else {
+      searchParams.delete('minPrice');
+      searchParams.delete('maxPrice');
+    }
 
     setSearchParams(searchParams, { preventScrollReset: true });
     setOpen(false);
