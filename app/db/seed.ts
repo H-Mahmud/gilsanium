@@ -1,5 +1,9 @@
-import db from '.';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { neon } from '@neondatabase/serverless';
 import { productsTable } from './schema';
+
+const sql = neon(process.env.DATABASE_URL!);
+const db = drizzle(sql);
 
 const images: string[] = [
   '/assets/images/products/bag.png',
@@ -103,9 +107,11 @@ export const main = async () => {
     console.log('🌱 Seeding...');
     await seedProducts();
     console.log('✅ Seeding complete!');
-    // process.exit(0);
+    process.exit(0);
   } catch (err) {
     console.error('❌ Seeding failed:', err);
-    // process.exit(1);
+    process.exit(1);
   }
 };
+
+main();
