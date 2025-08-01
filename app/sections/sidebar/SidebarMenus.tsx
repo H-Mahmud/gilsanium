@@ -1,6 +1,34 @@
+import { ChevronDown } from 'lucide-react';
+import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router';
 import type { NavData, NavItem } from '~/config-dashboard-menu';
 import { cn } from '~/utils';
+
+export default function SidebarMenus({ navData }: { navData: NavData[] }) {
+  const { pathname } = useLocation();
+  return (
+    <div className="basis-full px-6">
+      {navData.map((group) => (
+        <div className="pb-6" key={group.subheader}>
+          <GroupLabel>{group.subheader}</GroupLabel>
+          <ul className="pt-3">
+            {group.items.map((item) =>
+              item.children ? (
+                <SubMenu active={pathname === item.path} items={item} key={item.title} />
+              ) : (
+                <React.Fragment key={item.title}>
+                  <NavLink className="!cursor-pointer" key={item.title} to={item.path}>
+                    <MenuItem {...item} active={pathname === item.path} />
+                  </NavLink>
+                </React.Fragment>
+              ),
+            )}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function GroupLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -9,24 +37,12 @@ function GroupLabel({ children }: { children: React.ReactNode }) {
     </span>
   );
 }
-
-function MenuItem({ icon, title, active, badge }: NavItem & { active?: boolean }) {
-  return (
-    <button
-      className={cn(
-        'flex w-full items-center justify-between rounded-xl border-card-border p-2 text-primary',
-        active && 'bg-white',
-        active && 'border',
-      )}
-    >
-      <div className="flex items-center justify-start gap-2">
-        {icon}
-        <span>{title}</span>
-      </div>
-      {badge && <span className="text-sm font-semibold text-primary/50">{badge()}</span>}
-    </button>
-  );
-}
+type MenuItemProps = NavItem & {
+  active?: boolean;
+  className?: string;
+  handleClick?: () => void;
+  open?: boolean;
+};
 
 function SubMenuItem({ title, path }: { title: string; path: string }) {
   return (
@@ -42,37 +58,66 @@ function SubMenuItem({ title, path }: { title: string; path: string }) {
     </li>
   );
 }
-
-export default function SidebarMenus({ navData }: { navData: NavData[] }) {
-  const { pathname } = useLocation();
+function MenuItem({
+  icon,
+  title,
+  active,
+  badge,
+  className,
+  children,
+  handleClick,
+  open,
+}: MenuItemProps) {
   return (
-    <div className="basis-full px-6">
-      {navData.map((group) => (
-        <div className="pb-6" key={group.subheader}>
-          <GroupLabel>{group.subheader}</GroupLabel>
-          <ul className="pt-3">
-            {group.items.map((item) =>
-              item.children ? (
-                <div key={item.title}>
-                  <MenuItem {...item} active={pathname === item.path} />
+    <button
+      className={cn(
+        'flex w-full cursor-pointer items-center justify-between rounded-xl border-card-border p-2 text-primary transition hover:bg-gray-100',
+        active && 'bg-white',
+        active && 'border',
+        className,
+      )}
+      onClick={handleClick}
+    >
+      <div className="flex w-full items-center justify-between">
+        <span className="inline-flex items-center justify-start gap-2">
+          {icon} {title}
+        </span>
+        {children?.length && (
+          <ChevronDown
+            className={cn('ml-2 inline-block h-4 w-4 transition-transform', {
+              'rotate-180': open,
+            })}
+          />
+        )}
+      </div>
+      {badge && <span className="text-sm font-semibold text-primary/50">{badge()}</span>}
+    </button>
+  );
+}
 
-                  <ul className="submenu mx-4">
-                    {item.children.map(({ title, path }) => (
-                      <SubMenuItem key={title} path={path} title={title} />
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <>
-                  <NavLink className="!cursor-pointer" key={item.title} to={item.path}>
-                    <MenuItem {...item} active={pathname === item.path} />
-                  </NavLink>
-                </>
-              ),
-            )}
-          </ul>
+type SubMenuProps = {
+  items: NavItem;
+  active: boolean;
+};
+function SubMenu({ items, active }: SubMenuProps) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <MenuItem {...items} active={active} handleClick={() => setOpen(!open)} open={open} />
+
+      <div
+        className={cn(
+          'overflow-hidden transition-all duration-300',
+          open ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0',
+        )}
+      >
+        <div className="pl-6">
+          {items.children!.map((item) => (
+            <SubMenuItem key={item.title} path={item.path} title={item.title} />
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }
